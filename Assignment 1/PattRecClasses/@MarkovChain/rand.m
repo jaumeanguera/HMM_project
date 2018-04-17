@@ -24,7 +24,17 @@ function S=rand(mc,T)
 S=zeros(1,T);%space for resulting row vector
 nS=mc.nStates;
 
-error('Method not yet implemented');
+S = zeros(T,1) -1;    %Modify this for finite duration Markov chain
+S(1) = randsrc(1,1,[1:nS;mc.InitialProb']);
+for i=2:T
+    if S(i-1)<= nS
+        S(i) = randsrc(1,1,[1:nS;mc.TransitionProb(S(i-1),:)]);
+    else
+        break;
+    end
+end
+S = S(S>0);
+%error('Method not yet implemented');
 %continue code from here, and erase the error message........
 
 

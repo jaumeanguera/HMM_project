@@ -17,6 +17,9 @@ if numel(pD)>1
     error('Method works only for a single DiscreteD object');
 end;
 
+N = length(pD.ProbMass);
+R = randsrc(nData,1,[1:N;pD.ProbMass']);
+
 %*** Insert your own code here and remove the following error message 
 
-error('Not yet implemented');
+%error('Not yet implemented');
