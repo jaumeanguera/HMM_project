@@ -28,12 +28,14 @@ S = zeros(T,1) -1;    %Modify this for finite duration Markov chain
 S(1) = randsrc(1,1,[1:nS;mc.InitialProb']);
 for i=2:T
     if S(i-1)<= nS
-        S(i) = randsrc(1,1,[1:nS;mc.TransitionProb(S(i-1),:)]);
+        S(i) = randsrc(1,1,[1:nS+1;mc.TransitionProb(S(i-1),:)]);
     else
+        S = S(S>0);
+        S = S(1:end-1,:); 
         break;
     end
 end
-S = S(S>0);
+ 
 %error('Method not yet implemented');
 %continue code from here, and erase the error message........
 
