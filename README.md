@@ -1,2 +1,2 @@
 # HMM_project
-Project for the course in Pattern Recognition and Machine Learning
+Project for the course in Pattern Recognition and Machine Learning.
