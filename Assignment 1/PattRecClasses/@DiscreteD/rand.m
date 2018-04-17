@@ -1,4 +1,4 @@
-function R=rand(pD,nData)
+function R = rand(pD,nData)
 %R=rand(pD,nData) returns random scalars drawn from given Discrete Distribution.
 %
 %Input:
@@ -19,4 +19,7 @@ end;
 
 %*** Insert your own code here and remove the following error message 
 
-error('Not yet implemented');
+% Generate a random sequence of integers where each element of the sequence
+% can take any value 'n' from 1 to N with Prob(n) defined in pD.ProbMass.
+N = length(pD.ProbMass);
+R = randsrc(nData,1,[1:N;pD.ProbMass']);

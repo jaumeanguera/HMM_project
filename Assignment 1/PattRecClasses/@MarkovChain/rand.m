@@ -21,10 +21,28 @@ function S=rand(mc,T)
 %Code Authors:
 %---------------------------------------------
 
-S=zeros(1,T);%space for resulting row vector
-nS=mc.nStates;
+S = zeros(T,1) - 1;     %space for resulting row vector
+nS = mc.nStates;
 
-error('Method not yet implemented');
 %continue code from here, and erase the error message........
 
+% Assign the first value of the Markov Chain based on the initial
+% probabilities mc.InitialProb ('q' vector in lecture notes)
+S(1) = randsrc(1,1,[1:nS;mc.InitialProb']);
 
+for k = 2:T
+    
+    if (S(k-1) > nS)
+        % If mc has FINITE duration, stop the for-loop and take only the 
+        % valid values of S, which results in having length(S) <= T.
+        S = S(S>0);
+        break;
+    end
+    
+    % If mc has INFINITE duration, or mc has FINITE duration but we have
+    % not found the END state yet, then we continue generating the random 
+    % state sequence based on the transaction probabilities 
+    % mc.TransitionProb ('A' matrix in the lecture notes)
+    S(k) = randsrc(1,1,[1:nS;mc.TransitionProb(S(k-1),:)]);
+    
+end
