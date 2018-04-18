@@ -26,23 +26,44 @@ nS = mc.nStates;
 
 %continue code from here, and erase the error message........
 
+% Chech if the Markov Chain has FINITE duration.
+isFINITE = mc.finiteDuration();
+
 % Assign the first value of the Markov Chain based on the initial
 % probabilities mc.InitialProb ('q' vector in lecture notes)
 S(1) = randsrc(1,1,[1:nS;mc.InitialProb']);
 
-for k = 2:T
+if isFINITE
     
-    if (S(k-1) > nS)
-        % If mc has FINITE duration, stop the for-loop and take only the 
-        % valid values of S, which results in having length(S) <= T.
-        S = S(S>0);
-        break;
+    for k = 2:T
+
+        if (S(k-1) > nS)
+            % If the previous element in the sequence was the END state, 
+            % stop the for-loop and take only the valid values of S.
+            % This will result in having length(S) <= T.
+            S = S(S>0);
+            S = S(1:end-1);
+            break;
+        end
+
+        % When the MarkovChain has FINITE duration but we have not found 
+        % the END state yet, we continue generating the random state 
+        % sequence based on the transaction probabilities
+        % mc.TransitionProb ('A' matrix in the lecture notes)
+        S(k) = randsrc(1,1,[1:nS+1;mc.TransitionProb(S(k-1),:)]);
+
     end
     
-    % If mc has INFINITE duration, or mc has FINITE duration but we have
-    % not found the END state yet, then we continue generating the random 
-    % state sequence based on the transaction probabilities 
-    % mc.TransitionProb ('A' matrix in the lecture notes)
-    S(k) = randsrc(1,1,[1:nS;mc.TransitionProb(S(k-1),:)]);
+else
+    
+    for k = 2:T
+
+        % When the MarkovChain has INFINITE duration, we run the for-loop
+        % to generate generating the random state sequence based on the 
+        % transaction probabilities mc.TransitionProb ('A' matrix in the 
+        % lecture notes)
+        S(k) = randsrc(1,1,[1:nS+1;mc.TransitionProb(S(k-1),:)]);
+
+    end
     
 end
