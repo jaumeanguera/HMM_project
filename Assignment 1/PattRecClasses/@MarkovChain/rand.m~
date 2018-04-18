@@ -29,7 +29,7 @@ S(1) = randsrc(1,1,[1:nS;mc.InitialProb']);
 isFinite = mc.finiteDuration();
 for i=2:T
     if S(i-1)<= nS
-        if isFinite         %Decide next state based on the size of transition matrix
+        if isFinite
             S(i) = randsrc(1,1,[1:nS+1;mc.TransitionProb(S(i-1),:)]);
         else
             S(i) = randsrc(1,1,[1:nS;mc.TransitionProb(S(i-1),:)]);
