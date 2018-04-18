@@ -61,8 +61,10 @@ else
         % When the MarkovChain has INFINITE duration, we run the for-loop
         % to generate generating the random state sequence based on the 
         % transaction probabilities mc.TransitionProb ('A' matrix in the 
-        % lecture notes)
-        S(k) = randsrc(1,1,[1:nS+1;mc.TransitionProb(S(k-1),:)]);
+        % lecture notes). Note that in the INFINITE case, the range of
+        % correct states goes from 1 to nS, whereas in the FINITE case, the
+        % range correct states goes from 1 to nS+1.
+        S(k) = randsrc(1,1,[1:nS;mc.TransitionProb(S(k-1),:)]);
 
     end
     
