@@ -49,8 +49,8 @@ E_Xt = mean(X_test);    % Expectation output sequence
 VAR_Xt = var(X_test);   % Variance output sequence
 
 fprintf('\nResults for question 3 in A.1.2:\n');
-fprintf('Expectation of the observable outputs E_Xt = %.2f\n',E_Xt);
-fprintf('Variance of the observable outputs VAR_Xt = %.2f\n',VAR_Xt);
+fprintf('Expectation of the observable outputs E_Xt = %.3f\n',E_Xt);
+fprintf('Variance of the observable outputs VAR_Xt = %.3f\n',VAR_Xt);
 
 
 % 4. Get an impression of how the HMM behaves
@@ -61,8 +61,8 @@ figure('Name','Gaussian output of HMM with different mu1 and mu2');
 plot(X_test);
 grid on; grid minor;
 title('Behaviour of the HMM with different mu1 and mu2');
-xlabel('Observable outputs as a function of time X_t');
-ylabel('Time t');
+ylabel('Observable outputs as a function of time X_t');
+xlabel('Time t');
 ylim([-6 12]);
 
 
@@ -78,8 +78,8 @@ figure('Name','Gaussian output of HMM with same mu1 and mu2');
 plot(X_test);
 grid on; grid minor;
 title('Behaviour of the HMM with same mu1 and mu2');
-xlabel('Observable outputs as a function of time X_t');
-ylabel('Time t');
+ylabel('Observable outputs as a function of time X_t');
+xlabel('Time t');
 ylim([-6 12]);
 
 
@@ -102,6 +102,4 @@ g1 = GaussD('Mean',[1;1],'Covariance',eye(2));      % Distribution for state = 1
 g2 = GaussD('Mean',[-1;-1],'Covariance',[2 1;1 4]); % Distribution for state = 2
 h_q7  = HMM(mc, [g1; g2]);                          % The HMM for question 7
 [X_GaussD,S_GaussD] = h_q7.rand(T);                 % Output sequence
-
-
 
