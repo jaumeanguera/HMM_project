@@ -10,7 +10,7 @@ function R = rand(pD,nData)
 %   (size(R)= [1, nData]
 %
 %----------------------------------------------------
-%Code Authors:
+%Code Authors: Ashutosh Vaishnav and Jaume Anguera Peris 
 %----------------------------------------------------
 
 if numel(pD)>1
