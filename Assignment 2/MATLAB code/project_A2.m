@@ -124,11 +124,15 @@ else
     colorbar;    
 end
 
-% % Correlation analysis
-% figure()
-% imagesc(corr(mfccs'));
-% colorbar;
-% 
-% figure()
-% imagesc(corr(log10(spectgram)'));
-% colorbar;
+
+% Correlation analysis of the spectogram
+figure('Name','Correlation analysis of the spectral coefficients');
+imagesc(corr(log10(spectgram)'));
+title('Correlation analysis of the spectral coefficients');
+colorbar;
+
+% Correlation analysis of the ceptogram
+figure('Name','Correlation analysis of the cepstral coefficients');
+imagesc(corr(mfccs(2:end,:)'));
+title('Correlation analysis of the spectral coefficients');
+colorbar;
