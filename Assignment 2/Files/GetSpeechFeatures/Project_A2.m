@@ -36,3 +36,19 @@ colorbar,
 xlabel('Frequency bins');
 ylabel('Frequency bins');
 title('Correlation between Spectrogram coefficients');
+%% Paper vs plastic
+load('paper_rustle.mat');
+load('plastic_rustle.mat');
+sound(plastic,8000);
+ncep = 13;
+[mfccs]=GetSpeechFeatures(plastic,8000,0.03,ncep);
+mfccs = mfccs(2:end,:);
+mean_mfccs = ones(ncep-1,1)*mean(mfccs,1);
+mfccs = mfccs - mean_mfccs;
+mfccs = mfccs./sqrt(var(mfccs,1,1));
+figure
+imagesc(mfccs)
+colorbar;
+xlabel('Time t(seconds)');
+ylabel('Cepstrogram coefficients');
+title('MFCC for plastic rustling');
