@@ -8,12 +8,12 @@ close all;
 
 
 %% ---------------- Sound Signals ----------------
-show_audio_sig = 0;   % Show signals in the time domain? Yes (1) / No (0)
-listen_audio = 0;     % Listen to the audio? ? Yes (1) / No (0)
-winlength = 0.03;     % Window length the spectogram in seconds
+show_audio_sig = 0;  % Show signals in the time domain? Yes (1) / No (0)
+listen_audio = 0;    % Listen to the audio? ? Yes (1) / No (0)
+winlength = 0.03;    % Window length the spectogram in seconds
 ncep = 13;
-%audio = 'female';    % Audio to be read? Options: female, male, or music 
-audio = 'male';
+audio = 'female';    % Audio to be read? Options: female, male, or music 
+%audio = 'male';
 %audio = 'music';
 
 
@@ -37,6 +37,7 @@ if show_audio_sig
         title([audio,' speech signal']);
     end
 end
+
 
 % Plot audio zoomed in a particular range [t_start,t_start+50ms]
 % The factor fs_audio/1000 converts milisecons into indexes, which is 
