@@ -27,15 +27,23 @@ X = h.rand(10000);
 mean(X), var(X)
 %% Visualizing behaviour of HMM
 Xplot = h.rand(500);
-plot(Xplot)
+figure('Name','Gaussian output of HMM with different mu1 and mu2');
+plot(Xplot);
+grid on; grid minor;
+title('Behaviour of the HMM with same mu1 and mu2');
+ylabel('Observable outputs X_t');
+xlabel('Time t');
+ylim([-6 12]);
+
 %% Finite duration HMM
 p_initial = [0.5;0.5];                  % Initial probability
 A_initial = [0.8 0.1 0.1;0.05 0.9 0.05];        % Transition probability
 mc = MarkovChain(p_initial, A_initial); % State generator
-g1 = GaussD('Mean',[1;1],'StDev',1);        % Distribution for state = 1
-g2 = GaussD('Mean',[-1;-1],'StDev',3);        % Distribution for state = 2
+g1 = GaussD('Mean',0,'StDev',1);        % Distribution for state = 1
+g2 = GaussD('Mean',3,'StDev',2);        % Distribution for state = 2
 h  = HMM(mc, [g1; g2]);                 % The HMM
 x = rand(h, 100);                       % Generate an output sequence
+plot(x)
 %% HMM that generates vector output and is finite
 p_initial = [0.5;0.5];                  % Initial probability
 A_initial = [0.8 0.1 0.1;0.05 0.9 0.05];        % Transition probability
@@ -44,3 +52,12 @@ g1 = GaussD('Mean',[1;1],'Covariance',[1,0;0,1]);        % Distribution for stat
 g2 = GaussD('Mean',[-1;-1],'Covariance',[2,1;1,4]);        % Distribution for state = 2
 h  = HMM(mc, [g1; g2]);                 % The HMM
 x = rand(h, 100);                       % Generate an output sequence
+figure('Name','Gaussian output of HMM with different mu1 and mu2');
+plot(x(1,:));
+hold on
+plot(x(2,:));
+grid on; grid minor;
+title('Output samples from HMM with Gaussian vector distributions');
+ylabel('Observable outputs (X_t)');
+xlabel('Time(t)');
+ylim([-6 6]);
