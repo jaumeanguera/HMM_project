@@ -127,17 +127,22 @@ end
 
 
 % Correlation analysis of the spectogram
-figure('Name','Correlation analysis of the spectral coefficients');
-imagesc(corr(log10(spectgram)'));
-title('Correlation analysis of the spectral coefficients');
-colorbar;
+correlation_spect = corr(log10(spectgram)');
+figure
+imagesc(abs(correlation_spect))
+colorbar,
+xlabel('Frequency bins');
+ylabel('Frequency bins');
+title('Correlation between Spectrogram coefficients');
 
 % Correlation analysis of the ceptogram
-figure('Name','Correlation analysis of the cepstral coefficients');
-imagesc(corr(mfccs(2:end,:)'));
-title('Correlation analysis of the spectral coefficients');
-colorbar;
-
+correlation_mfcc = corr(mfccs(2:end,:)');
+figure
+imagesc(abs(correlation_mfcc))
+colorbar,
+xlabel('MFC coefficients(1 to 12)');
+ylabel('MFC coefficients(1 to 12)');
+title('Correlation between the MFCCs');
 
 % Compute dynamic features of the signal
 [mfccs_delta,mfccs_delta2] = GetDerivativeTypeFeatures(mfccs);
@@ -155,3 +160,20 @@ xlabel('Time t (seconds)');
 ylabel('Coefficients second derivative ceptogram');
 title('Second derivative ceptogram');
 colorbar;
+
+% Comparing cepstral coefficients of plastic rustling vs paper rustling
+load('paper_rustle.mat');
+load('plastic_rustle.mat');
+%sound(plastic,8000);
+ncep = 13;
+[mfccs]=GetSpeechFeatures(plastic,8000,0.03,ncep);
+mfccs = mfccs(2:end,:);
+mean_mfccs = ones(ncep-1,1)*mean(mfccs,1);
+mfccs = mfccs - mean_mfccs;
+mfccs = mfccs./sqrt(var(mfccs,1,1));
+figure
+imagesc(mfccs)
+colorbar;
+xlabel('Time t(seconds)');
+ylabel('Cepstrogram coefficients');
+title('MFCC for plastic rustling');
