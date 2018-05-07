@@ -16,6 +16,7 @@ audio = 'female';     % Audio to be read? Options: female, male, or music
 %audio = 'male';
 %audio = 'music';
 audio_q9 = 'plastic';   % Audio to be read in q9? Options: paper or plastic
+%audio_q9 = 'paper';
 listen_audio_q9 = 1;  % Listen to the audio in q9? ? Yes (1) / No (0)
 
 % Read audio file
