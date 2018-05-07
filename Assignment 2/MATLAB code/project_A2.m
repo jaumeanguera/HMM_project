@@ -13,8 +13,8 @@ listen_audio = 0;     % Listen to the audio? ? Yes (1) / No (0)
 winlength = 0.03;     % Window length the spectogram in seconds
 ncep = 13;
 %audio = 'female';    % Audio to be read? Options: female, male, or music 
-%audio = 'male';
-audio = 'music';
+audio = 'male';
+%audio = 'music';
 
 
 % Read audio file
@@ -135,4 +135,22 @@ colorbar;
 figure('Name','Correlation analysis of the cepstral coefficients');
 imagesc(corr(mfccs(2:end,:)'));
 title('Correlation analysis of the spectral coefficients');
+colorbar;
+
+
+% Compute dynamic features of the signal
+[mfccs_delta,mfccs_delta2] = GetDerivativeTypeFeatures(mfccs);
+
+figure('Name','First derivative ceptogram');
+imagesc(zscore(mfccs_delta(2:end,:),0,1));
+xlabel('Time t (seconds)');
+ylabel('Coefficients first derivative ceptogram');
+title('First derivative ceptogram');
+colorbar;
+
+figure('Name','Second derivative ceptogram');
+imagesc(zscore(mfccs_delta2(2:end,:),0,1));
+xlabel('Time t (seconds)');
+ylabel('Coefficients second derivative ceptogram');
+title('Second derivative ceptogram');
 colorbar;

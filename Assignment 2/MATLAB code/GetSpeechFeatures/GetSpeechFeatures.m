@@ -1,3 +1,4 @@
+
 %[spectgram,f,t]=GetSpeechFeatures(signal,fs,winlength)
 %or
 %[mfccs]=GetSpeechFeatures(signal,fs,winlength,ncep)
