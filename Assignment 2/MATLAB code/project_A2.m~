@@ -10,13 +10,13 @@ close all;
 %% ---------------- Sound Signals ----------------
 show_audio_sig = 0;   % Show signals in the time domain? Yes (1) / No (0)
 listen_audio = 0;     % Listen to the audio? ? Yes (1) / No (0)
-winlength = 0.03;     % Window length for the spectrogram in seconds
-ncep = 13;            % Number of cepstrogram coefficients
+winlength = 0.03;     % Window length the spectogram in seconds
+ncep = 13;            % Number of ceptogram coefficients
 audio = 'female';     % Audio to be read? Options: female, male, or music 
 %audio = 'male';
 %audio = 'music';
-audio_q9 = 'plastic';   % Audio to be read in q9? Options: paper or plastic
-listen_audio_q9 = 1;  % Listen to the audio in q9? ? Yes (1) / No (0)
+audio_q9 = 'paper';   % Audio to be read in q9? Options: paper or plastic
+listen_audio_q9 = 0;   
 
 % Read audio file
 [sig_audio,fs_audio] = audioread(['Sounds/',audio,'.wav']);
@@ -87,47 +87,47 @@ if listen_audio
 end
 
 
-% Get spectrogram and cepstrogram from GetSpeechFeaturesand 
+% Get spectogram and ceptogram from GetSpeechFeaturesand 
 [mfccs,spectgram,f,t] = GetSpeechFeatures(sig_audio,fs_audio,winlength,ncep);
 
 
-% Show spectrogram
+% Show spectogram
 if (strcmp(audio,'music'))
     figure('Name','Spectogram of the music signal');
     imagesc(t,f,log10(spectgram));
     xlabel('Time t (seconds)');
-    ylabel('Frequencies of the spectrogram f (Hz)');
+    ylabel('Frequencies of the spectogram f (Hz)');
     title('Spectogram of the music signal');
     colorbar;
 else
     figure('Name',['Spectogram of the ',audio,' speech']);
     imagesc(t,f,log10(spectgram));
     xlabel('Time t (seconds)');
-    ylabel('Frequencies of the spectrogram f (Hz)');
+    ylabel('Frequencies of the spectogram f (Hz)');
     title(['Spectogram of the ',audio,' speech']);
     colorbar;   
 end
 
 
-% Show cepstrogram
+% Show ceptogram
 if (strcmp(audio,'music'))
     figure('Name','Ceptogram of the music signal');
     imagesc(zscore(mfccs(2:end,:),0,1));
     xlabel('Time t (seconds)');
-    ylabel('Coefficients cepstrogram');
+    ylabel('Coefficients ceptogram');
     title('Ceptogram of the music signal speech');
     colorbar;
 else
     figure('Name',['Ceptogram of the ',audio,' speech']);
     imagesc(zscore(mfccs(2:end,:),0,1));
     xlabel('Time t (seconds)');
-    ylabel('Coefficients cepstrogram');
+    ylabel('Coefficients ceptogram');
     title(['Ceptogram of the ',audio,' speech']);
     colorbar;    
 end
 
 
-% Correlation analysis of the spectrogram
+% Correlation analysis of the spectogram
 correlation_spect = corr(log10(spectgram)');
 figure
 imagesc(abs(correlation_spect))
@@ -136,7 +136,7 @@ xlabel('Frequency bins');
 ylabel('Frequency bins');
 title('Correlation between Spectrogram coefficients');
 
-% Correlation analysis of the cepstrogram
+% Correlation analysis of the ceptogram
 correlation_mfcc = corr(mfccs(2:end,:)');
 figure
 imagesc(abs(correlation_mfcc))
@@ -148,26 +148,26 @@ title('Correlation between the MFCCs');
 % Compute dynamic features of the signal
 [mfccs_delta,mfccs_delta2] = GetDerivativeTypeFeatures(mfccs);
 
-figure('Name','First derivative cepstrogram');
+figure('Name','First derivative ceptogram');
 imagesc(zscore(mfccs_delta(2:end,:),0,1));
 xlabel('Time t (seconds)');
-ylabel('Coefficients first derivative cepstrogram');
-title('First derivative cepstrogram');
+ylabel('Coefficients first derivative ceptogram');
+title('First derivative ceptogram');
 colorbar;
 
-figure('Name','Second derivative cepstrogram');
+figure('Name','Second derivative ceptogram');
 imagesc(zscore(mfccs_delta2(2:end,:),0,1));
 xlabel('Time t (seconds)');
-ylabel('Coefficients second derivative cepstrogram');
-title('Second derivative cepstrogram');
+ylabel('Coefficients second derivative ceptogram');
+title('Second derivative ceptogram');
 colorbar;
 
 
 % Comparing cepstral coefficients of paper rustling vs plastic rustling
-load('Sounds/paper_rustle.mat');   % Load audio paper rustling
-load('Sounds/plastic_rustle.mat'); % Load audio plastic rustling
-winlength_rust = 0.03;             % Window length for the spectrogram in seconds              
-fs_rust = 8000;                    % Sampling freq for the rustling audio
+load('Sound/paper_rustle.mat');     % Load audio paper rustling
+load('Sound/plastic_rustle.mat');   % Load audio plastic rustling
+winlength_rust = 0.03;              
+fs_rust = 8000;
 
 if listen_audio_q9
     if (strcmp(audio_q9,'paper'))
@@ -179,6 +179,7 @@ end
 
 
 if (strcmp(audio_q9,'paper'))
+    
     [mfccs] = GetSpeechFeatures(paper,fs_rust,winlength_rust,ncep);
     figure('Name','Ceptogram for the paper rustling');
     imagesc(zscore(mfccs(2:end,:),0,1));
@@ -186,13 +187,16 @@ if (strcmp(audio_q9,'paper'))
     xlabel('Time t(seconds)');
     ylabel('Cepstrogram coefficients');
     title('MFCC for paper rustling');
+
 else
+    
     [mfccs] = GetSpeechFeatures(plastic,fs_rust,winlength_rust,ncep);
     figure('Name','Ceptogram for the plastic rustling');
     imagesc(zscore(mfccs(2:end,:),0,1));
     colorbar;
     xlabel('Time t(seconds)');
     ylabel('Cepstrogram coefficients');
-    title('MFCC for plastic rustling');   
+    title('MFCC for paper rustling');
+    
 end
 
