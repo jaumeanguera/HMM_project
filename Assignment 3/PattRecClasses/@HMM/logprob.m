@@ -42,21 +42,16 @@ for i = 1:numel(hmm)    % for all HMM objects
     % Select one HMM
     h = hmm(i);
     
-    % Create a matrix to allocate the state-conditional likelihood values.
-    % For infinite-duration HMM, nStates = N, and, for finite-duration HMM,
-    % nStates = N+1
-    pX = zeros(h.nStates,T);
-    
-    % Compute pX(j,t)= P( X(t)= observed x(t) | S(t)= j ) for all sources
+    % Get the matrix of state-conditional likelihood values
+    % pX(j,t)= P( X(t)= observed x(t) | S(t)= j ) for all sources
     % j = 1...nStates, all all time instants t = 1...T
-    for j=1:h.nStates
-        pX(j,:) = h.OutputDistr(j).prob(x);
-    end
+    [pX,logS] = h.OutputDistr.prob(x);
     
     % Call the forward algorithm to obtain c(t) for t = 1...T
     [~,c] = h.StateGen.forward(pX);
     
-    % Compute log[ P( X(1)...X(T) | HMM ) ]
-    logP(i) = sum(log(c));
-    
+    % Compute log[ P( X(1)...X(T) | HMM ) ] considering the unscaled
+    % version of the state-conditional likelihood probabilities pX
+    logP(i) = sum(log(c)) + sum(logS);
+
 end;
