@@ -36,11 +36,23 @@ x = [-0.2, 2.6, 1.3];
 
 % Get a matrix with state-conditional likelihood values
 % pX contains scaled probabilities
-pX = [g1.prob(x); g2.prob(x)];
+pX = h.OutputDistr.prob(x);
 
 % Compute forward algorithm
 [alphaHat,c] = forward(mc,pX);
 
-% Testing logprob function 
+% Test logprob function 
 Prob = h.logprob(x);
+
+% Show results
+fprintf('Matrix with state-conditional likelihood values: \n');
+fprintf('\nalphaHat = \n\n');
+disp(alphaHat);
+fprintf('\nRow vector with observation probabilities c(t): \n');
+fprintf('\nc = \n\n');
+disp(c);
+fprintf('\nLog-probability of the observation probabilities vector: \n');
+fprintf('\nProb = \n\n');
+disp(Prob);
+
 
