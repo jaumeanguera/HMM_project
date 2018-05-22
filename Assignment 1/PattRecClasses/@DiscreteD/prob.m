@@ -25,7 +25,7 @@ nZ=size(Z,2);%number of observed data
 p=zeros(pDlength,nZ);%zero prob if Z is out of range
 Z=round(Z);%make sure it is integer
 for i=1:pDlength%for all objects in pD
-    iDataOK=(Z>=1) & (Z <=length(pD(i).ProbMass));%within range of the DiscreteD
+    iDataOK=(Z>=1) & (Z <=length(pD(i).j));%within range of the DiscreteD
     p(i,iDataOK )=pD(i).ProbMass(Z(iDataOK))';
 end;
 if pDlength>1
