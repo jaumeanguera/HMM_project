@@ -1,0 +1,9 @@
+function [ Prob ] = testHMM( hmm,X,lData )
+%TESTHMM Summary of this function goes here
+%   Detailed explanation goes here
+
+Prob = zeros(1,length)
+
+
+end
+
