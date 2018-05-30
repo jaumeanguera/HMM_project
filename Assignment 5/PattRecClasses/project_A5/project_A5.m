@@ -7,12 +7,12 @@ pathToClasses = '../../sample_recordings/';
 
 % Define vector with all possible classes
 %classes = {'down','off'}; 
-classes = {'up';'on'};
-%,'off','right','left','yes','no','wow','one'}; % All except down
+classes = {'up';'on';'off';'right'};
+% {'down','up','on,'off','right','left','yes','no','wow','one'};
 nClasses = length(classes);
 
 % Parameters to generate HMM and store output
-nStates = [15;5];
+nStates = [15;11;4;12];
 hmm_classes = cell(nClasses,1);
 
 % Parameters to store features of the train and test data
@@ -25,6 +25,9 @@ lFeatures_test = cell(nClasses,1);   % Length sub-sequences test data
 probObsData = cell(nClasses,1);
 listIndClasses = cumsum([1,nClasses*ones(1,nClasses)]);
 
+% Check that parameters are correct
+assert(length(nStates)==nClasses,'Each class must have a specific nSates');
+assert(nClasses>=2||nClasses<=10,'Incorrect number of classes');
 
 % Generate HMM for each class
 for k = 1:nClasses
