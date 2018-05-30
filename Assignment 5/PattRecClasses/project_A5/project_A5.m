@@ -12,8 +12,7 @@ classes = {'up';'on'};
 nClasses = length(classes);
 
 % Parameters to generate HMM and store output
-nStates = 5
-;
+nStates = [15;5];
 hmm_classes = cell(nClasses,1);
 
 % Parameters to store features of the train and test data
@@ -47,9 +46,9 @@ for k = 1:nClasses
     lFeatures_test{k} = lData_test;
     
     % Generate HMM using training data
-    hmm_classes{k} = MakeLeftRightHMM(nStates,GaussMixD,obsData_train,lData_train);
+    hmm_classes{k} = MakeLeftRightHMM(nStates(k),GaussMixD,obsData_train,lData_train);
     
-    fprintf('HMM for class %s has been correctly created\n',classes{k});
+    fprintf('HMM for class ''%s'' has been correctly created\n',classes{k});
 
 end
 
